@@ -1,0 +1,21 @@
+.app-header {
+    background: #263800;
+    border-radius: 0px;
+}
+
+.intro-home-title {
+    font-size: 35px;
+    font-family: Tahoma;
+    font-weight: 100;
+}
+
+.intro-home-description {
+    font-size: 20px;
+    font-family: Tahoma;
+    font-weight: 100;
+    margin-top: 20px;
+}
+
+.home-list-group {
+    margin-top: 40px;
+}
