@@ -25,7 +25,7 @@ export default class WordGuess extends React.Component {
     }
 
     setCurrentContext() {
-        fetch('https://api.wordnik.com/v4/words.json/randomWords?hasDictionaryDef=true&limit=4&api_key=8e5956350987aa6b0521e0c4761074eabe07f42e9d8fd1492')
+        fetch('http://wordgame.service.betafactory.tech/api/wordguess/random_word')
         .then(res => res.json())
         .then((data) => {
           this.setCurrentContextDefinition(data[0].word, data.sort(() => Math.random() - 0.5))
@@ -34,7 +34,7 @@ export default class WordGuess extends React.Component {
     }
 
     setCurrentContextDefinition = (word, options) => {
-        fetch('https://api.wordnik.com/v4/word.json/' + word + '/definitions?includeRelated=false&useCanonical=false&includeTags=false&api_key=8e5956350987aa6b0521e0c4761074eabe07f42e9d8fd1492')
+        fetch('http://wordgame.service.betafactory.tech/api/wordguess/definition?word=' + word)
         .then(res => res.json())
         .then((data) => {
           var text = data[0].text
@@ -45,8 +45,9 @@ export default class WordGuess extends React.Component {
     }
 
     refreshChallenge = () => {
+        this.setState({isLoadingContextDefinition: true})
         this.setCurrentContext()
-        this.setState({result: false})
+        this.setState({result: false, isLoadingContextDefinition: false})
     }
 
     optionSelected = (e) => {

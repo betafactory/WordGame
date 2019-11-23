@@ -19,3 +19,7 @@
 .home-list-group {
     margin-top: 40px;
 }
+
+.home-alert {
+    margin-bottom: 0px !important;
+}

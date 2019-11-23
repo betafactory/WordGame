@@ -1,6 +1,6 @@
 import React from 'react';
 import './index.css';
-import { Jumbotron, ListGroup, ListGroupItem } from 'reactstrap';
+import { Jumbotron, ListGroup, ListGroupItem, UncontrolledAlert } from 'reactstrap';
 import Navigation from '../../component/navigation';
 import WordGuess from '../../component/wordguess';
 
@@ -12,6 +12,9 @@ export default class Home extends React.Component {
   render() {
     return (
       <div>
+          <UncontrolledAlert color="warning" className="home-alert">
+              Please click <b>login</b> to <em>create an account</em> and start tracking your progress! <b>Disclaimer</b>: We do not store any information without your consent.
+          </UncontrolledAlert>
         <Jumbotron className="app-header">
           <div class="container">
             <Navigation></Navigation>
