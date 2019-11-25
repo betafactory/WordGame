@@ -1,0 +1,37 @@
+.profile-user-image-box {
+    background-color: #FFFFFF;
+    padding-top: 0;
+    padding-left: 0;
+}
+
+.profile-user-image {
+    height: 222px;
+    width: 222px;
+    border-radius: 8px;
+}
+
+.profile-user-name {
+    background-color: #FFFFFF;
+    padding-top: 0;
+}
+
+.profile-edit-button {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.progress-container {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.profile-loader {
+    display: block;
+    margin-top: 200px;
+    margin-bottom: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #FFFFFF !important;
+}

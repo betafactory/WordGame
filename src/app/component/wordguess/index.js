@@ -1,23 +1,31 @@
 import React from 'react';
-import {
-    Card, CardBody,
-    Spinner, FormGroup, Label, Input, Button, CardTitle } from 'reactstrap';
-import { FaCheck, FaCheckCircle, FaExclamationCircle } from 'react-icons/fa';
+import {Button, Card, CardBody, CardTitle, FormGroup, Input, Label, Spinner} from 'reactstrap';
+import {FaCheckCircle, FaExclamationCircle} from 'react-icons/fa';
+import {reactLocalStorage} from 'reactjs-localstorage';
 import './index.css';
 
 export default class WordGuess extends React.Component {
-    constructor(props) {
-      super(props);
-    }
-
     state = {
         word: "",
+        challenge: "",
         definition: "",
+        partOfSpeech: "",
+        synonyms: [],
+        examples: [],
         options: [],
+        similarWords: [],
+        derivations: [],
         isLoadingContextDefinition: true,
+        isLoadingEvaluationResult: true,
         selectedOption: null,
         result: false,
-        success: false
+        success: false,
+        showValidateButton: false,
+        showOptions: true
+    }
+
+    constructor(props) {
+        super(props);
     }
 
     componentDidMount() {
@@ -25,92 +33,149 @@ export default class WordGuess extends React.Component {
     }
 
     setCurrentContext() {
-        fetch('http://wordgame.service.betafactory.tech/api/wordguess/random_word')
-        .then(res => res.json())
-        .then((data) => {
-          this.setCurrentContextDefinition(data[0].word, data.sort(() => Math.random() - 0.5))
-        })
-        .catch(console.log)
+        let generate_url = process.env.REACT_APP_BETAFACTORY_SERVICE_URL + '/api/challenge/generate'
+        if(reactLocalStorage.get("token", false) !== false) {
+            generate_url = process.env.REACT_APP_BETAFACTORY_SERVICE_URL + '/api/challenge/generate?token=' + reactLocalStorage.get("token")
+        }
+        fetch(generate_url)
+            .then(res => res.json())
+            .then((data) => {
+                this.setState({
+                    definition: data["definition"],
+                    isLoadingContextDefinition: false,
+                    challenge: data["challenge"],
+                    options: data["words"],
+                })
+            })
+            .catch(console.log)
     }
 
-    setCurrentContextDefinition = (word, options) => {
-        fetch('http://wordgame.service.betafactory.tech/api/wordguess/definition?word=' + word)
-        .then(res => res.json())
-        .then((data) => {
-          var text = data[0].text
-          text = text.replace(/<\/?[^>]+(>|$)/g, "").toLowerCase()
-          this.setState({definition: text, isLoadingContextDefinition: false, word: word, options: options})
-        })
-        .catch(console.log)
-    }
+    capitalize(word) {
+        return word.replace( /(^|\s)([a-z])/g , function(m,p1,p2){ return p1+p2.toUpperCase(); } );
+    };
 
     refreshChallenge = () => {
         this.setState({isLoadingContextDefinition: true})
         this.setCurrentContext()
-        this.setState({result: false, isLoadingContextDefinition: false})
+        this.setState({result: false, showValidateButton: false, showOptions: true})
     }
 
     optionSelected = (e) => {
-        this.setState({selectedOption: e.currentTarget.value})
+        this.setState({selectedOption: e.currentTarget.value, showValidateButton: true})
     }
 
     validateOption = () => {
-        if(this.state.selectedOption === this.state.word) {
-            this.setState({success: true, result: true})
-        } else {
-            this.setState({success: false, result: true})
+        let token = reactLocalStorage.get("token", false)
+        let validate_endpoint = process.env.REACT_APP_BETAFACTORY_SERVICE_URL + '/api/challenge/verify?challenge=' +
+            this.state.challenge + "&choice=" + this.state.selectedOption
+        if(token !== false) {
+            validate_endpoint = process.env.REACT_APP_BETAFACTORY_SERVICE_URL + '/api/challenge/verify?challenge=' +
+                this.state.challenge + "&choice=" + this.state.selectedOption + "&token=" + token
         }
+        fetch(validate_endpoint)
+            .then(res => res.json())
+            .then((data) => {
+                this.setState({
+                    success: data["success"],
+                    word: data["word"],
+                    partOfSpeech: data["descriptors"][0]["partOfSpeech"],
+                    synonyms: data["descriptors"][0]["synonyms"],
+                    examples: data["descriptors"][0]["examples"],
+                    similarWords: data["descriptors"][0]["similarTo"],
+                    derivations: data["descriptors"][0]["derivation"],
+                    result: true,
+                    showValidateButton: false,
+                    showOptions: false
+                })
+            })
+            .catch(console.log)
+    }
+
+    getResults = () => {
+        return (<Card className="result-card">
+            <CardBody>
+                {this.state.success ?
+                    (<CardTitle className="float-left">
+                        <FaCheckCircle size="2em" color="green"/>
+                        <p class="alert-para"> That's correct! Wohooooo!</p>
+                        <div className="descriptors">
+                            {this.state.partOfSpeech ? (
+                                <p><b>Word</b>: {this.capitalize(this.state.word)}</p>) : null}
+                            {this.state.partOfSpeech ? (
+                                <p><b>Part of speech</b>: {this.capitalize(this.state.partOfSpeech)}</p>) : null}
+                            {this.state.synonyms ? (
+                                <p><b>Synonyms</b>: {this.capitalize(this.state.synonyms.join(", "))}</p>) : null}
+                            {this.state.examples ? (
+                                <p><b>Examples</b>: {this.capitalize(this.state.examples.join(", "))}</p>) : null}
+                            {this.state.similarWords ? (
+                                <p><b>Similar Words</b>: {this.capitalize(this.state.similarWords.join(", "))}</p>) : null}
+                            {this.state.derivations ? (
+                                <p><b>Derivations</b>: {this.capitalize(this.state.derivations.join(", "))}</p>) : null}
+                        </div>
+                    </CardTitle>) :
+                    (<CardTitle className="float-left">
+                        <FaExclamationCircle size="2em" color="red"/>
+                        <p class="alert-para"> Oops! Correct answer is <b>{this.state.word}</b></p>
+                        <div className="descriptors">
+                            {this.state.partOfSpeech ? (
+                                <p><b>Word</b>: {this.capitalize(this.state.word)}</p>) : null}
+                            {this.state.partOfSpeech ? (
+                                <p><b>Part of speech</b>: {this.capitalize(this.state.partOfSpeech)}</p>) : null}
+                            {this.state.synonyms ? (
+                                <p><b>Synonyms</b>: {this.capitalize(this.state.synonyms.join(", "))}</p>) : null}
+                            {this.state.examples ? (
+                                <p><b>Examples</b>: {this.capitalize(this.state.examples.join(", "))}</p>) : null}
+                            {this.state.similarWords ? (
+                                <p><b>Similar Words</b>: {this.capitalize(this.state.similarWords.join(", "))}</p>) : null}
+                            {this.state.derivations ? (
+                                <p><b>Derivations</b>: {this.capitalize(this.state.derivations.join(", "))}</p>) : null}
+                        </div>
+                    </CardTitle>)}
+            </CardBody>
+            <CardTitle className="card-title-custom"><Button onClick={this.refreshChallenge}
+                               className="check-button btn-block">New Challenge!</Button></CardTitle>
+        </Card>)
     }
 
     getOptions = () => {
-        var options = this.state.options
-        return(
-        <FormGroup tag="fieldset">
-            {options.map((option, index) => 
-            <FormGroup check>
-                <Label check>
-                    <Input className="option-radio" onChange={this.optionSelected} type="radio" name="radio" value={option.word} />{' '}
-                    {option.word}
-                </Label>
-            </FormGroup>
-        )}
-        </FormGroup>);
+        let options = this.state.options
+        return (
+            <FormGroup tag="fieldset">
+                {options.map((option, index) =>
+                    <FormGroup check>
+                        <Label check>
+                            <Input className="option-radio" onChange={this.optionSelected} type="radio" name="radio"
+                                   value={option.word}/>{' '}
+                            {option.word}
+                        </Label>
+                    </FormGroup>
+                )}
+            </FormGroup>);
     }
 
     render() {
-      return (
-        <div class="word-guess-container">
-            <Card>
-                <CardBody>
-                <div class="context-definition">
-                    {this.state.isLoadingContextDefinition ?
-                    <Spinner style={{ width: '10rem', height: '10rem' }} type="grow" color="warning" />:
-                     this.state.definition}
-                </div>
-                <div class="context-options">
-                    {this.getOptions()}
-                </div>
-                </CardBody>
-                {this.state.selectedOption ? <Button onClick={this.validateOption} color="success" className="check-button">Validate!</Button>: null}
-            </Card>
-            {this.state.result?
-            (<Card className="result-card">
-                <CardBody>
-                  {this.state.success ? 
-                  (<CardTitle className="float-left">
-                      <FaCheckCircle size="2em" color="green"/>
-                      <p class="alert-para"> That's correct! Wohooooo!</p>
-                  </CardTitle>):
-                  (<CardTitle className="float-left">
-                      <FaExclamationCircle size="2em" color="red"/>
-                      <p class="alert-para"> Oops! Correct answer is <b>{this.state.word}</b></p>
-                  </CardTitle>)}
-                  <CardTitle className="float-right"><Button onClick={this.refreshChallenge}>New Challenge!</Button></CardTitle>
-                </CardBody>
-            </Card>
-            ): null}
-        </div>
-        
-      );
+        return (
+            <div class="word-guess-container">
+                <Card className="wg-card">
+                    {this.state.isLoadingContextDefinition ? (
+                            <Spinner style={{width: '5rem', height: '5rem'}} type="grow" color="success"/>) :
+                        (<CardBody>
+                            <div class="context-definition">
+                                {this.state.definition}
+                            </div>
+                            {this.state.showOptions ?
+                                (<div class="context-options">
+                                    {this.getOptions()}
+                                </div>) : null
+                            }
+                        </CardBody>)}
+                    {this.state.showValidateButton ? <Button onClick={this.validateOption} color="success"
+                                                             className="check-button">Validate!</Button> : null}
+                </Card>
+                {this.state.result ?
+                    this.getResults() : null}
+            </div>
+
+        );
     }
-  }
+}

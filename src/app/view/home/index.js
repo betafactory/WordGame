@@ -1,36 +1,66 @@
 import React from 'react';
 import './index.css';
-import { Jumbotron, ListGroup, ListGroupItem, UncontrolledAlert } from 'reactstrap';
+import {Jumbotron, UncontrolledAlert, Button} from 'reactstrap';
 import Navigation from '../../component/navigation';
 import WordGuess from '../../component/wordguess';
+import Footer from "../../component/footer";
+import {reactLocalStorage} from 'reactjs-localstorage';
 
 export default class Home extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+    constructor(props) {
+        super(props);
+    }
 
-  render() {
-    return (
-      <div>
-          <UncontrolledAlert color="warning" className="home-alert">
-              Please click <b>login</b> to <em>create an account</em> and start tracking your progress! <b>Disclaimer</b>: We do not store any information without your consent.
-          </UncontrolledAlert>
-        <Jumbotron className="app-header">
-          <div class="container">
-            <Navigation></Navigation>
-            <WordGuess></WordGuess>
-          </div>
-        </Jumbotron>
-        <div class="container">
-          <div class="intro-home-title">
-              Have some words you need to learn?
-          </div>
-          <div class="intro-home-description">
-              We're working on adding more features! You can help us in many ways.<br></br>Navigate to the link below!
-          </div>
-          <a href="http://github.com/betafactory/wordgame">http://github.com/betafactory/wordgame</a>
-        </div>
-      </div> 
-    );
-  }
+    state = {
+        showLoginAlert: true
+    }
+
+    componentDidMount () {
+        if(reactLocalStorage.get("token", false) === false) {
+            this.setState({showLoginAlert: true})
+        } else {
+            this.setState({showLoginAlert: false})
+        }
+    }
+
+    render() {
+        return (
+            <div>
+                {this.state.showLoginAlert ?
+                    (<UncontrolledAlert color="warning" className="home-alert">
+                    Please click <b>login</b> to <em>create an account</em> and start tracking your
+                    progress! <b>Disclaimer</b>: We do not store any information without your consent.
+                </UncontrolledAlert>) : null}
+                <Jumbotron className="app-header">
+                    <div class="container">
+                        <Navigation></Navigation>
+                        <WordGuess></WordGuess>
+                    </div>
+                </Jumbotron>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <Jumbotron>
+                                <h1 className="display-3">250K</h1>
+                                <p>Words</p>
+                            </Jumbotron>
+                        </div>
+                        <div className="col-md-4">
+                            <Jumbotron>
+                                <h1 className="display-3">10</h1>
+                                <p>Categories</p>
+                            </Jumbotron>
+                        </div>
+                        <div className="col-md-4">
+                            <Jumbotron>
+                                <h1 className="display-3">$0</h1>
+                                <p>Pricing</p>
+                            </Jumbotron>
+                        </div>
+                    </div>
+                </div>
+                <Footer></Footer>
+            </div>
+        );
+    }
 }

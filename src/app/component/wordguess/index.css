@@ -49,3 +49,16 @@
 .alert-para {
     display: inline;
 }
+
+.wg-card {
+    padding: 0px;
+}
+
+.descriptors {
+    margin-top: 30px;
+    line-height: 130%;
+}
+
+.card-title-custom {
+    margin-bottom: 0px !important;
+}
