@@ -1,4 +1,6 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# WordGame
+
+Practice vocabulary like a champ!
 
 ## Available Scripts
 

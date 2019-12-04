@@ -95,7 +95,7 @@ export default class Profile extends React.Component {
                                    {
                                        label: 'Seen',
                                        fill: true,
-                                       lineTension: 1,
+                                       lineTension: 0.1,
                                        backgroundColor: 'rgba(75,192,192,0.4)',
                                        borderColor: 'rgba(75,192,192,1)',
                                        borderCapStyle: 'butt',

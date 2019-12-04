@@ -140,17 +140,21 @@ export default class WordGuess extends React.Component {
     getOptions = () => {
         let options = this.state.options
         return (
-            <FormGroup tag="fieldset">
-                {options.map((option, index) =>
-                    <FormGroup check>
-                        <Label check>
-                            <Input className="option-radio" onChange={this.optionSelected} type="radio" name="radio"
-                                   value={option.word}/>{' '}
-                            {option.word}
-                        </Label>
-                    </FormGroup>
-                )}
-            </FormGroup>);
+            <div>
+                <FormGroup tag="fieldset">
+                    {options.map((option, index) =>
+                    <div className="col-6 option-box">
+                        <FormGroup check className="options-form">
+                            <Label check>
+                                <Input onChange={this.optionSelected} name="option-name" id={option.word} type="radio"
+                                    value={option.word}/>{' '}
+                                <label className="option-val" for={option.word}><span></span>{option.word}</label>
+                            </Label>
+                        </FormGroup>
+                        </div>
+                    )}
+                </FormGroup>
+            </div>);
     }
 
     render() {
