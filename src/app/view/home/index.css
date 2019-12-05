@@ -23,3 +23,50 @@
 .home-alert {
     margin-bottom: 0px !important;
 }
+
+.home-metric-jumbotron {
+    color: #263800;
+    font-size: 30px;
+    font-family: Tahoma;
+    background-color: white;
+    border: 1px solid #263800;
+    border-radius: 10px;
+}
+
+.home-metric-jumbotron:hover {
+    color: white;
+    font-family: Tahoma;
+    background-color: #263800;
+    border: 1px solid #263800;
+    border-radius: 10px;
+}
+
+.home-row-container {
+    text-align: center;
+}
+
+.home-row-title {
+    margin: auto;
+    font-size: 35px;
+    color: #263800;
+    font-weight: 700;
+    padding-top: 60px;
+    padding-bottom: 40px;
+}
+
+.progress-image-container {
+    padding: 0;
+    background-color: white;
+    display: flex;
+}
+
+.progress-image-container img {
+    max-width: 100%;
+    max-width: 100%;
+}
+
+.progress-desc-container {
+    background-color: white;
+    font-size: 25px;
+    color: #263800;
+}

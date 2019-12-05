@@ -12,7 +12,10 @@ export default class Home extends React.Component {
     }
 
     state = {
-        showLoginAlert: true
+        showLoginAlert: true,
+        words: 0,
+        challenges: 0,
+        categories: 0
     }
 
     componentDidMount () {
@@ -21,6 +24,16 @@ export default class Home extends React.Component {
         } else {
             this.setState({showLoginAlert: false})
         }
+        fetch(process.env.REACT_APP_BETAFACTORY_SERVICE_URL + "/api/general/metrics")
+            .then(res => res.json())
+            .then((data) => {
+                this.setState({
+                    words: data["words"],
+                    challenges: data["challenges"],
+                    categories: data["categories"]
+                })
+            })
+            .catch(console.log)
     }
 
     render() {
@@ -38,23 +51,48 @@ export default class Home extends React.Component {
                     </div>
                 </Jumbotron>
                 <div class="container">
+                    <div class="row home-row-container">
+                        <div class="home-row-title">
+                            Get to know the current state of our dictionary
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-md-4">
-                            <Jumbotron>
-                                <h1 className="display-3">250K</h1>
+                            <Jumbotron className="home-metric-jumbotron">
+                                <h1 className="display-3">{this.state.words}</h1>
                                 <p>Words</p>
                             </Jumbotron>
                         </div>
                         <div className="col-md-4">
-                            <Jumbotron>
-                                <h1 className="display-3">10</h1>
-                                <p>Categories</p>
+                            <Jumbotron className="home-metric-jumbotron">
+                                <h1 className="display-3">{this.state.challenges}</h1>
+                                <p>Challenges</p>
                             </Jumbotron>
                         </div>
                         <div className="col-md-4">
-                            <Jumbotron>
-                                <h1 className="display-3">$0</h1>
-                                <p>Pricing</p>
+                            <Jumbotron className="home-metric-jumbotron">
+                                <h1 className="display-3">{this.state.categories}</h1>
+                                <p>Categories</p>
+                            </Jumbotron>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row home-row-container">
+                        <div class="home-row-title">
+                            Enhanced progress tracker
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <Jumbotron className="progress-image-container">
+                                <img class="progress-image" src="/progress.png"></img>
+                            </Jumbotron>
+                        </div>
+                        <div className="col-md-4">
+                            <Jumbotron className="progress-desc-container">
+                                <h1 className="display-3">Learnings.</h1>
+                                <p>Track your progress like a champ. We remember your weak spots and know how to strenthen it.</p>
                             </Jumbotron>
                         </div>
                     </div>

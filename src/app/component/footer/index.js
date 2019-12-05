@@ -25,19 +25,19 @@ export default class Footer extends React.Component {
                 <div className="col-md-2 footer-social animated fadeInDown">
                     <h4><FaInfo/> <b>Legal</b></h4>
                     <ul>
-                        <li><a href="#">Terms</a></li>
-                        <li><a href="#">Privacy</a></li>
-                        <li><a href="#">Disclaimer</a></li>
-                        <li><a href="#">Data Policy</a></li>
+                        <li><a href="/terms">Terms</a></li>
+                        <li><a href="/privacy">Privacy</a></li>
+                        <li><a href="/disclaimer">Disclaimer</a></li>
+                        <li><a href="/datapolicy">Data Policy</a></li>
                     </ul>
                 </div>
                 <div className="col-md-2 footer-social animated fadeInDown">
                     <h4><FaInfo/> <b>Wordgame</b></h4>
                     <ul>
                         <li><a href="#">About</a></li>
-                        <li><a href="#">Contributors</a></li>
+                        <li><a target="_blank" href="https://github.com/betafactory/WordGame/graphs/contributors">Contributors</a></li>
                         <li><a href="#">Roadmap</a></li>
-                        <li><a href="#">Contribute</a></li>
+                        <li><a target="_blank" href="https://github.com/betafactory/WordGame">Contribute</a></li>
                         <li><a href="#">Developers</a></li>
                         <li><a href="#">Leaderboard</a></li>
                         <li><a href="#">News</a></li>
@@ -47,7 +47,7 @@ export default class Footer extends React.Component {
                     <h4><FaInfo/> <b>Resources</b></h4>
                     <ul>
                         <li><a href="#">Word Lists</a></li>
-                        <li><a href="#">Challenges</a></li>
+                        <li><a href="/challenges">Challenges</a></li>
                         <li><a href="#">Beta Bot</a></li>
                         <li><a href="#">Assessment Tests</a></li>
                         <li><a href="#">Counselling</a></li>
@@ -70,7 +70,6 @@ export default class Footer extends React.Component {
                 </div>
             </div>
         </footer>
-        <section class="footer-title"><p>© <a class="footer-title" href="https://betafactory.tech">Beta Factory</a></p></section>
             </div>)
     }
 }
