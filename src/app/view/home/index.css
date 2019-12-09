@@ -1,6 +1,9 @@
 .app-header {
-    background: #263800;
-    border-radius: 0px;
+    background: #2C5F2D;
+    border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
 }
 
 .intro-home-title {
@@ -25,19 +28,19 @@
 }
 
 .home-metric-jumbotron {
-    color: #263800;
+    color: #97BC62FF;
     font-size: 30px;
     font-family: Tahoma;
     background-color: white;
-    border: 1px solid #263800;
+    border: 1px solid #97BC62FF;
     border-radius: 10px;
 }
 
 .home-metric-jumbotron:hover {
     color: white;
     font-family: Tahoma;
-    background-color: #263800;
-    border: 1px solid #263800;
+    background-color: #97BC62FF;
+    border: 1px solid #97BC62FF;
     border-radius: 10px;
 }
 

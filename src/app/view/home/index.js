@@ -92,7 +92,7 @@ export default class Home extends React.Component {
                         <div className="col-md-4">
                             <Jumbotron className="progress-desc-container">
                                 <h1 className="display-3">Learnings.</h1>
-                                <p>Track your progress like a champ. We remember your weak spots and know how to strenthen it.</p>
+                                <p>Track your progress like a champ. We remember your weak spots and definitely know how to strengthen them.</p>
                             </Jumbotron>
                         </div>
                     </div>

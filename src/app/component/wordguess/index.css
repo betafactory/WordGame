@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
-
 .word-guess-container {
     margin: auto;
     margin-top: 60px !important;
@@ -7,20 +5,20 @@
 }
 
 .context-definition {
-    font-size: 25px;
+    font-size: 30px;
     font-weight: bold;
     color: black;
-    font-family: 'Roboto';
+    font-family: 'Roboto', sans-serif;
     padding: 50px;
     left: 50%;
     text-align: center;
 }
 
 .context-options {
-    font-size: 20px;
+    font-size: 28px;
     font-weight: 500;
     color: black;
-    font-family: 'Roboto';
+    font-family: 'Roboto', sans-serif;
 }
 
 .context-definition-loading {

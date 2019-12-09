@@ -3,11 +3,11 @@
 }
 
 .navbar-app-title {
-    font-size: 30px;
-    font-family: Tahoma;
+    font-size: 40px;
     color: white !important;
     font-weight: bold;
     text-decoration: none;
+    font-family: 'Roboto', sans-serif;
 }
 
 .logo {
@@ -20,6 +20,16 @@
     font-family: Tahoma;
     color: white !important;
     font-weight: 300;
+    background: transparent;
+    text-decoration: none;
+}
+
+.navbar-menu:hover{
+    font-size: 20px;
+    font-family: Tahoma;
+    color: white !important;
+    font-weight: 300;
+    background: transparent;
     text-decoration: none;
 }
 
