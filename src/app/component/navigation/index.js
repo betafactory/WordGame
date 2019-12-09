@@ -29,7 +29,7 @@ export default class Navigation extends React.Component {
         modal: false,
         toggle: false,
         startVerifyingOTP: false,
-        mobileNumber: null,
+        identity: null,
         OTP: null,
         userLoggedIn: false,
         showIncorrectOTPMessage: false
@@ -67,8 +67,13 @@ export default class Navigation extends React.Component {
         this.setState({startVerifyingOTP: false, showIncorrectOTPMessage: false})
     }
 
-    handleMobileNumberChange = (e) => {
-        this.setState({mobileNumber: e.target.value})
+    validateEmail = (identity) => {
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(identity).toLowerCase());
+    }
+
+    handleIdentityChange = (e) => {
+        this.setState({identity: e.target.value})
     }
 
     handleOTPChange = (e) => {
@@ -76,8 +81,12 @@ export default class Navigation extends React.Component {
     }
 
     getOTP = () => {
-        if (this.state.mobileNumber !== null && this.state.mobileNumber.length === 10) {
-            fetch(process.env.REACT_APP_BETAFACTORY_SERVICE_URL + '/api/authenticate?mobile=' + this.state.mobileNumber)
+        let identity_type = "mobile"
+        if(this.validateEmail(this.state.identity)) {
+            identity_type = "email"
+        }
+        if (this.state.identity !== null) {
+            fetch(process.env.REACT_APP_BETAFACTORY_SERVICE_URL + '/api/authenticate?identity=' + this.state.identity + "&type=" + identity_type)
                 .then(res => res.json())
                 .then((data) => {
                     setTimeout(() => this.setState({isButtonDisabled: false}), 5000);
@@ -91,7 +100,7 @@ export default class Navigation extends React.Component {
 
     verifyOTP = () => {
         const data = new FormData();
-        data.append('mobile', this.state.mobileNumber)
+        data.append('identity', this.state.identity)
         data.append('otp', this.state.OTP)
         fetch(process.env.REACT_APP_BETAFACTORY_SERVICE_URL + '/api/authenticate/', {
             method: "post",
@@ -141,9 +150,9 @@ export default class Navigation extends React.Component {
                     <ModalBody>
                         <InputGroup>
                             <InputGroupAddon addonType="prepend">
-                                <Button>India (+91)</Button>
+                                <Button>Identity</Button>
                             </InputGroupAddon>
-                            <Input placeholder="Mobile Number" onChange={this.handleMobileNumberChange}/>
+                            <Input placeholder="Mobile Number (India) or Email" onChange={this.handleIdentityChange}/>
                             <InputGroupAddon addonType="append">
                                 <Button color="warning" disabled={this.state.startVerifyingOTP} onClick={this.getOTP}>Get
                                     Code</Button>
