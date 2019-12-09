@@ -65,6 +65,7 @@ export default class Navigation extends React.Component {
         reactLocalStorage.remove("token")
         this.refreshUserStatus()
         this.setState({startVerifyingOTP: false, showIncorrectOTPMessage: false})
+        window.location = "/"
     }
 
     validateEmail = (identity) => {
