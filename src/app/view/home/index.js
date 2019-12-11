@@ -1,6 +1,6 @@
 import React from 'react';
 import './index.css';
-import {Jumbotron, UncontrolledAlert, Button} from 'reactstrap';
+import {Jumbotron, UncontrolledAlert, Button, Alert} from 'reactstrap';
 import Navigation from '../../component/navigation';
 import WordGuess from '../../component/wordguess';
 import Footer from "../../component/footer";
@@ -48,6 +48,9 @@ export default class Home extends React.Component {
                     <div class="container">
                         <Navigation></Navigation>
                         <WordGuess></WordGuess>
+                        <Alert color="success" className="header-generic-alert">
+                         We just released <b>WordGame</b> Chrome Extension. <a href="https://chrome.google.com/webstore/detail/kbjhggmokdclbgocdpjpibikmfmeoilb" target="_blank">Download Now, It's free!</a>
+                        </Alert>
                     </div>
                 </Jumbotron>
                 <div class="container">

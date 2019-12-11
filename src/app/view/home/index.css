@@ -73,3 +73,9 @@
     font-size: 25px;
     color: #263800;
 }
+
+.header-generic-alert {
+    margin: auto;
+    width: 60%;
+    margin-top: 20px;
+}
