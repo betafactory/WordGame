@@ -145,7 +145,7 @@ export default class Settings extends React.Component {
     render() {
         return (
             <div>
-                <Jumbotron className="app-header">
+                <Jumbotron className="app-header-settings">
                     <div class="container">
                         <Navigation></Navigation>
                     </div>

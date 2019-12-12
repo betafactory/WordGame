@@ -56,17 +56,15 @@ export default class Footer extends React.Component {
                 </div>
 
                 <div className="col-md-3 footer-ns animated fadeInRight">
-                    <h4><b>Beta Nudges</b></h4>
-                    <p>Warm and sweet nudges for you once in a blue moon. Opt out anytime, we'd love that too!</p>
-                    <p>
-                        <div className="input-group">
-                            <input type="text" className="form-control" placeholder="What's your email?"/>
-                      <span className="input-group-btn">
-                        <button className="btn btn-default" type="button"><span
-                            className="glyphicon glyphicon-envelope"></span></button>
-                      </span>
+                    <h4><FaInfo/> <b>Downloads</b></h4>
+                    <div className="row">
+                        <div className="col-md-5 chrome-web-store-icon">
+                            <img src="http://icons.iconarchive.com/icons/dtafalonso/android-lollipop/512/Play-Store-icon.png"></img>
                         </div>
-                    </p>
+                        <div className="col-md-5 android-download-icon">
+                            <a target="_blank" href="https://chrome.google.com/webstore/detail/kbjhggmokdclbgocdpjpibikmfmeoilb"><img src="https://cdn0.iconfinder.com/data/icons/applications-windows-2/24/Chrome_Webstore_application-512.png"></img></a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </footer>

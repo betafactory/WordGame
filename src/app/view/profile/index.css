@@ -1,3 +1,16 @@
+.app-header-profile {
+    background-image: url("/background.gif");
+    background-size: cover;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    display: flex;
+    flex-direction: column;
+    height: 20vh;
+    margin: 0;
+}
+
 .profile-user-image-box {
     background-color: #FFFFFF;
     padding-top: 0;

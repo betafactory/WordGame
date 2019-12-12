@@ -25,7 +25,7 @@ export default class Terms extends React.Component {
     render() {
         return (
             <div>
-                <Jumbotron className="app-header">
+                <Jumbotron className="app-header-terms">
                     <div class="container">
                         <Navigation></Navigation>
                     </div>

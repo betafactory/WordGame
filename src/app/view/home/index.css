@@ -1,9 +1,14 @@
 .app-header {
-    background: #2C5F2D;
-    border-bottom-left-radius: 50%;
-    border-bottom-right-radius: 50%;
+    background-image: url("/background.gif");
+    background-size: cover;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
 }
 
 .intro-home-title {
@@ -74,8 +79,15 @@
     color: #263800;
 }
 
+@media only screen and (max-width: 600px) {
+    .header-generic-alert {
+        width: 100% !important;
+    }
+  }
+
+
 .header-generic-alert {
     margin: auto;
-    width: 60%;
+    width: 80%;
     margin-top: 20px;
 }

@@ -25,7 +25,7 @@ export default class DataPolicy extends React.Component {
     render() {
         return (
             <div>
-                <Jumbotron className="app-header">
+                <Jumbotron className="app-header-data-policy">
                     <div class="container">
                         <Navigation></Navigation>
                     </div>

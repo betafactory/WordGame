@@ -25,7 +25,7 @@ export default class Disclaimer extends React.Component {
     render() {
         return (
             <div>
-                <Jumbotron className="app-header">
+                <Jumbotron className="app-header-disclaimer">
                     <div class="container">
                         <Navigation></Navigation>
                     </div>

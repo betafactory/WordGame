@@ -65,3 +65,23 @@
     text-decoration: none;
     color: black;
 }
+
+.chrome-web-store-icon {
+    padding: 0;
+    display: flex;
+}
+
+.chrome-web-store-icon img {
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.android-download-icon {
+    padding: 0;
+    display: flex;
+}
+
+.android-download-icon img {
+    max-height: 100%;
+    max-width: 100%;
+}

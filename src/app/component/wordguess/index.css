@@ -1,7 +1,13 @@
+@media only screen and (max-width: 600px) {
+    .word-guess-container {
+        width: 100% !important;
+    }
+  }
+
 .word-guess-container {
     margin: auto;
     margin-top: 60px !important;
-    width: 60%;
+    width: 80%;
 }
 
 .context-definition {

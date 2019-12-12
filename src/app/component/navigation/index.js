@@ -18,11 +18,15 @@ import {
     UncontrolledDropdown,
     DropdownToggle,
     DropdownMenu,
-    DropdownItem
+    DropdownItem,
+    NavbarToggler
 } from 'reactstrap';
 
-import {FaCodeBranch, FaInfo, FaRoad, FaUserCircle, FaUserFriends, FaOtter} from 'react-icons/fa';
+import {FaCodeBranch, FaInfo, FaRoad, FaUserCircle, FaUserFriends, FaOtter, FaCheck, FaBars} from 'react-icons/fa';
 import {reactLocalStorage} from 'reactjs-localstorage';
+import Alert from 'react-s-alert';
+import 'react-s-alert/dist/s-alert-default.css';
+import 'react-s-alert/dist/s-alert-css-effects/slide.css';
 
 export default class Navigation extends React.Component {
     state = {
@@ -32,7 +36,8 @@ export default class Navigation extends React.Component {
         identity: null,
         OTP: null,
         userLoggedIn: false,
-        showIncorrectOTPMessage: false
+        showIncorrectOTPMessage: false,
+        collapsed: false
     }
 
     constructor(props) {
@@ -42,6 +47,11 @@ export default class Navigation extends React.Component {
 
     componentDidMount() {
         this.refreshUserStatus()
+    }
+
+    toggleNavbar = () => {
+        let collapsed = this.state.collapsed
+        this.setState({collapsed: !collapsed})
     }
 
     refreshUserStatus = () => {
@@ -83,11 +93,13 @@ export default class Navigation extends React.Component {
 
     getOTP = () => {
         let identity_type = "mobile"
+        let operator = "91"
         if(this.validateEmail(this.state.identity)) {
             identity_type = "email"
+            operator = this.state.identity.replace(/.*@/, "")
         }
         if (this.state.identity !== null) {
-            fetch(process.env.REACT_APP_BETAFACTORY_SERVICE_URL + '/api/authenticate?identity=' + this.state.identity + "&type=" + identity_type)
+            fetch(process.env.REACT_APP_BETAFACTORY_SERVICE_URL + '/api/authenticate?identity=' + this.state.identity + "&type=" + identity_type + "&operator=" + operator)
                 .then(res => res.json())
                 .then((data) => {
                     setTimeout(() => this.setState({isButtonDisabled: false}), 5000);
@@ -101,7 +113,11 @@ export default class Navigation extends React.Component {
 
     verifyOTP = () => {
         const data = new FormData();
-        data.append('identity', this.state.identity)
+        let identity = this.state.identity
+        if(!this.validateEmail(this.state.identity)) {
+            identity = "91" + identity
+        }
+        data.append('identity', identity)
         data.append('otp', this.state.OTP)
         fetch(process.env.REACT_APP_BETAFACTORY_SERVICE_URL + '/api/authenticate/', {
             method: "post",
@@ -124,9 +140,9 @@ export default class Navigation extends React.Component {
         return (
             <div className="navbar-block">
                 <Navbar className="navbar-custom" expand="md">
-                    <NavbarBrand className="navbar-app-title" href="#" onClick={() => this.goToView("")}><img class="logo" src="/logo.svg"/> word
-                        game</NavbarBrand>
-                    <Collapse navbar>
+                    <NavbarBrand className="navbar-app-title" href="#" onClick={() => this.goToView("")}><img class="logo" src="/logo.svg"/> word game</NavbarBrand>
+                    <NavbarToggler onClick={() => this.toggleNavbar()}><FaBars color="white" size="30"></FaBars></NavbarToggler>
+                    <Collapse isOpen={this.state.collapsed} navbar>
                         <Nav className="ml-auto" navbar>
                             {this.state.userLoggedIn ?
                                 (<UncontrolledDropdown className="navbar-menu">
@@ -139,7 +155,7 @@ export default class Navigation extends React.Component {
                                     <DropdownItem tag="a" href="#" onClick={this.logout} >Logout</DropdownItem>
                                 </DropdownMenu>
                             </UncontrolledDropdown>) :
-                                (<NavItem>
+                                (<NavItem className="float-right">
                                     <NavLink className="navbar-menu" href="#"
                                              onClick={this.toggle}><FaUserCircle/> Login</NavLink>
                                 </NavItem>)}
@@ -175,6 +191,7 @@ export default class Navigation extends React.Component {
                         }
                     </ModalFooter>
                 </Modal>
+                <Alert stack={{limit: 1}} />
             </div>
         );
     }
