@@ -17,7 +17,7 @@ export default class WordGuess extends React.Component {
         similarWords: [],
         derivations: [],
         isLoadingContextDefinition: true,
-        isLoadingEvaluationResult: true,
+        isLoadingEvaluationResult: false,
         selectedOption: null,
         result: false,
         success: false,
@@ -106,7 +106,8 @@ export default class WordGuess extends React.Component {
         });
     }
 
-    validateOption = () => {        
+    validateOption = () => {      
+        this.setState({showValidateButton: false, isLoadingEvaluationResult: true})  
         let token = reactLocalStorage.get("token", false)
         let validate_endpoint = process.env.REACT_APP_BETAFACTORY_SERVICE_URL + '/api/challenge/verify?challenge=' +
             this.state.challenge + "&choice=" + this.state.selectedOption
@@ -135,8 +136,8 @@ export default class WordGuess extends React.Component {
                     similarWords: data["descriptors"][0]["similarTo"],
                     derivations: data["descriptors"][0]["derivation"],
                     result: true,
-                    showValidateButton: false,
-                    enableOptions: false
+                    enableOptions: false,
+                    isLoadingEvaluationResult: false
                 })
             })
             .catch(console.log)
@@ -213,7 +214,12 @@ export default class WordGuess extends React.Component {
             <div class="word-guess-container">
                 <Card className="wg-card">
                     {this.state.isLoadingContextDefinition ? (
-                            <Spinner style={{width: '5rem', height: '5rem'}} type="grow" color="success"/>) :
+                            <Spinner 
+                                style={{
+                                    width: '5rem', 
+                                    height: '5rem', 
+                                    margin: 'auto'
+                                }} type="grow" color="success"/>) :
                         (<CardBody>
                             <div class="context-definition">
                                 {this.state.definition} ?
@@ -222,8 +228,16 @@ export default class WordGuess extends React.Component {
                                 {this.getOptions()}
                             </div>
                         </CardBody>)}
-                    {this.state.showValidateButton ? <Button onClick={this.validateOption} color="success"
+                    {this.state.showValidateButton ? <Button onClick={this.validateOption} disabled={!this.state.showValidateButton} color="success"
                                                              className="check-button">Validate!</Button> : null}
+                    {this.state.isLoadingEvaluationResult ? <Spinner 
+                                                                style={{
+                                                                    width: '3rem', 
+                                                                    height: '3rem', 
+                                                                    marginLeft: 'auto',
+                                                                    marginRight: 'auto',
+                                                                    marginBottom: '15px'
+                                                                }} color="warning"/>: null}
                 </Card>
                 {this.state.result ?
                     this.getResults() : null}

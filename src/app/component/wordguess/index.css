@@ -138,3 +138,9 @@ input[type="radio"]#control_05:checked + label {
 .card-title-custom {
     margin-bottom: 0px !important;
 }
+
+.loading-spinner {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-bottom: 10px;
+}
