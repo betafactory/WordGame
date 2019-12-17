@@ -22,7 +22,7 @@ export default class WordGuess extends React.Component {
         result: false,
         success: false,
         showValidateButton: false,
-        showOptions: true
+        enableOptions: true
     }
 
     constructor(props) {
@@ -69,7 +69,7 @@ export default class WordGuess extends React.Component {
     refreshChallenge = () => {
         this.setState({isLoadingContextDefinition: true})
         this.setCurrentContext()
-        this.setState({result: false, showValidateButton: false, showOptions: true})
+        this.setState({result: false, showValidateButton: false, enableOptions: true})
     }
 
     optionSelected = (e) => {
@@ -136,7 +136,7 @@ export default class WordGuess extends React.Component {
                     derivations: data["descriptors"][0]["derivation"],
                     result: true,
                     showValidateButton: false,
-                    showOptions: false
+                    enableOptions: false
                 })
             })
             .catch(console.log)
@@ -197,7 +197,7 @@ export default class WordGuess extends React.Component {
                     <div className="col-6 option-box">
                         <FormGroup check className="options-form">
                             <Label check>
-                                <Input onChange={this.optionSelected} name="option-name" id={option.word} type="radio"
+                                <Input onChange={this.optionSelected} disabled={!this.state.enableOptions} name="option-name" id={option.word} type="radio"
                                     value={option.word}/>{' '}
                                 <label className="option-val" for={option.word}><span></span>{option.word}</label>
                             </Label>
@@ -218,11 +218,9 @@ export default class WordGuess extends React.Component {
                             <div class="context-definition">
                                 {this.state.definition} ?
                             </div>
-                            {this.state.showOptions ?
-                                (<div class="context-options">
-                                    {this.getOptions()}
-                                </div>) : null
-                            }
+                            <div class="context-options">
+                                {this.getOptions()}
+                            </div>
                         </CardBody>)}
                     {this.state.showValidateButton ? <Button onClick={this.validateOption} color="success"
                                                              className="check-button">Validate!</Button> : null}
