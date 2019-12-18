@@ -14,6 +14,7 @@ import {
 } from 'react-chartjs-2';
 import Navigation from '../../component/navigation';
 import Footer from "../../component/footer";
+import { TagCloud } from 'react-tagcloud'
 import {reactLocalStorage} from 'reactjs-localstorage';
 
 export default class Profile extends React.Component {
@@ -28,6 +29,7 @@ export default class Profile extends React.Component {
         enrollment: [],
         focus: null,
         learnt: 0,
+        wordCloudData: [],
         options: {
             responsive: true,
             tooltips: {
@@ -88,6 +90,7 @@ export default class Profile extends React.Component {
                            enrollment: enrollments,
                            focus: data["focus"]["name"],
                            learnt: data["learnt"],
+                           wordCloudData: data["progress"]["cloud"],
                            data: {
                                ...this.state.data,
                                labels: data["progress"]["overall"]["baseline"]["labels"],
@@ -236,6 +239,25 @@ export default class Profile extends React.Component {
         )
     }
 
+    wordCloudRenderer = (tag, size, color) => (
+        <span
+          key={tag.value}
+          style={{
+            animation: 'blinker 3s linear infinite',
+            animationDelay: `${Math.random() * 2}s`,
+            fontSize: `${size / 2}em`,
+            border: `1px solid ${color}`,
+            margin: '5px',
+            padding: '15px',
+            borderRadius: '50px', 
+            display: 'inline-block',
+            color: 'black'
+          }}
+        >
+          {tag.value}
+        </span>
+      )
+
     render() {
         return (
             <div>
@@ -287,6 +309,34 @@ export default class Profile extends React.Component {
                                     </Breadcrumb>
                                 </div>
                                 {this.getProgress()}
+                                <div>
+                                    <Breadcrumb tag="nav" listTag="div">
+                                        <BreadcrumbItem tag="span">WordCloud</BreadcrumbItem>
+                                        <BreadcrumbItem active tag="span">Amateur</BreadcrumbItem>
+                                    </Breadcrumb>
+                                </div>
+                                <TagCloud className="word-cloud" tags={this.state.wordCloudData["amateur"]} minSize={1} maxSize={3} renderer={this.wordCloudRenderer} />
+                                <div>
+                                    <Breadcrumb tag="nav" listTag="div">
+                                        <BreadcrumbItem tag="span">WordCloud</BreadcrumbItem>
+                                        <BreadcrumbItem active tag="span">Novice</BreadcrumbItem>
+                                    </Breadcrumb>
+                                </div>
+                                <TagCloud className="word-cloud" tags={this.state.wordCloudData["novice"]} minSize={1} maxSize={3} renderer={this.wordCloudRenderer} />
+                                <div>
+                                    <Breadcrumb tag="nav" listTag="div">
+                                        <BreadcrumbItem tag="span">WordCloud</BreadcrumbItem>
+                                        <BreadcrumbItem active tag="span">Intermediate</BreadcrumbItem>
+                                    </Breadcrumb>
+                                </div>
+                                <TagCloud className="word-cloud" tags={this.state.wordCloudData["intermediate"]} minSize={1} maxSize={3} renderer={this.wordCloudRenderer} />
+                                <div>
+                                    <Breadcrumb tag="nav" listTag="div">
+                                        <BreadcrumbItem tag="span">WordCloud</BreadcrumbItem>
+                                        <BreadcrumbItem active tag="span">Expert</BreadcrumbItem>
+                                    </Breadcrumb>
+                                </div>
+                                <TagCloud className="word-cloud" tags={this.state.wordCloudData["expert"]} minSize={1} maxSize={3} renderer={this.wordCloudRenderer} />
                             </div>)}
                     </div>
                 <Footer></Footer>
