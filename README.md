@@ -2,6 +2,8 @@
 
 Practice vocabulary like a champ!
 
+![alt text](https://user-images.githubusercontent.com/11073943/71100757-96d02800-21db-11ea-9c79-25b7eebe94cc.png)
+
 ## Available Scripts
 
 In the project directory, you can run:
