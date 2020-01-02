@@ -49,7 +49,7 @@ export default class Home extends React.Component {
                         <Navigation></Navigation>
                         <WordGuess></WordGuess>
                         <Alert color="success" className="header-generic-alert">
-                         We just released <b>WordGame</b> Chrome Extension. <a href="https://chrome.google.com/webstore/detail/kbjhggmokdclbgocdpjpibikmfmeoilb" target="_blank">Download Now, It's free!</a>
+                         We just released <b>WordGame</b> Android App. <a href="http://bit.ly/wordgame-playstore" target="_blank">Download Now, It's free!</a>
                         </Alert>
                     </div>
                 </Jumbotron>
