@@ -59,7 +59,7 @@ export default class Footer extends React.Component {
                     <h4><FaInfo/> <b>Downloads</b></h4>
                     <div className="row">
                         <div className="col-md-5 chrome-web-store-icon">
-                            <img src="http://icons.iconarchive.com/icons/dtafalonso/android-lollipop/512/Play-Store-icon.png"></img>
+                            <a target="_blank" href="http://bit.ly/wordgame-playstore"><img src="http://icons.iconarchive.com/icons/dtafalonso/android-lollipop/512/Play-Store-icon.png"></img></a>
                         </div>
                         <div className="col-md-5 android-download-icon">
                             <a target="_blank" href="https://chrome.google.com/webstore/detail/kbjhggmokdclbgocdpjpibikmfmeoilb"><img src="https://cdn0.iconfinder.com/data/icons/applications-windows-2/24/Chrome_Webstore_application-512.png"></img></a>
